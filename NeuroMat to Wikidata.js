@@ -784,7 +784,13 @@ function zoteroItemToQuickStatements(item) {
 	// Labels, default is en
 	if (item.language && (item.language.toLowerCase() in languageMapping)) {
 		let lang = item.language.toLowerCase();
-		addStatement('L'+item.language.toLowerCase(), '"' + item.title + '"');
+		if (lang == "pt" || lang == "pt-br") {
+			addStatement('Lpt', '"' + item.title + '"');
+			addStatement('Lpt-br', '"' + item.title + '"');
+		}
+		else {
+			addStatement('L'+item.language.toLowerCase(), '"' + item.title + '"');
+		}
 	}
 	else {
 		addStatement('Len', '"' + item.title + '"');
@@ -927,6 +933,9 @@ function zoteroItemToQuickStatements(item) {
 		// otherwise use "und" for undetermined language
 		addStatement('P1476', 'und:"' + item.title + '"', ref);
 	}
+
+	// Part of RIDC NeuroMat and financed by FAPESP in the context of the project '2013/07699-0'
+	addStatement('P361', 'Q18477654', 'P8324', 'Q5508997', 'P1932', '"'+'FAPESP 2013/07699-0'+'"', ref)
 
 	// Extra field (sometimes the identifiers are only present there. The arXiv ID is an example)
 	if (item.extra) {
